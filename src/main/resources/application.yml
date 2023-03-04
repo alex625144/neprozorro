@@ -1,14 +1,14 @@
 server:
-  port:
+  port: 8080
 
 logging:
   level:
-    com.knighttodo.knighttodo: INFO
+    com.neprozorro: INFO
 
 spring:
   output:
     ansi:
-      enabled: NEVER
+      enabled: ALWAYS
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=neprozorro
     username: postgres
@@ -16,7 +16,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: false
     properties:
       hibernate:
@@ -24,6 +24,3 @@ spring:
         format_sql: true
         order_by:
           default_null_ordering: last
-
-baseUrl:
-  experience: "http://localhost:6070"
