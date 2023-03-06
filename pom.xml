@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.neprozorro</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>neprozorro</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>neprozorro</name>
     <description>neprozorro-app</description>
