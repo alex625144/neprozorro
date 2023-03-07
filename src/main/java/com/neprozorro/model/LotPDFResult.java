@@ -43,6 +43,6 @@ public class LotPDFResult {
     private String model;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Lot.id", referencedColumnName = "idLot")
+    @JoinColumn(name = "Lot.id", referencedColumnName = "id")
     private Lot lot;
 }
