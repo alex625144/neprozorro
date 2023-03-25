@@ -19,12 +19,12 @@ public class ResultResource {
 
     private final ResultService resultService;
 
-    @GetMapping("/laptops/dateRange?{date}")
+    @GetMapping("/laptops/dateRange?from={startDate},to={endDate}")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<ResultReport> getResultTable(@PathVariable LocalDate date) {
+    public List<ResultReport> getResultTable(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
         List<ResultReport> resultReports = new ArrayList<>();
         try {
-            resultReports =resultService.getResult(date);
+            resultReports =resultService.getResult(startDate, endDate);
         } catch (RuntimeException ex) {
             ex.printStackTrace();
         }

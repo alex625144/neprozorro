@@ -20,9 +20,7 @@ public class ResultService {
     private final ResultReportRepository resultReportRepository;
 
     @Transactional
-    public List<ResultReport> getResult(LocalDate date) {
-        List<ResultReport> resultReport = new ArrayList<>();
-        resultReport = resultReportRepository.findAll();
-        return resultReport;
+    public List<ResultReport> getResult(LocalDate startDate, LocalDate endDate) {
+        return resultReportRepository.findResultReportsByDateAndDate(startDate, endDate);
     }
 }

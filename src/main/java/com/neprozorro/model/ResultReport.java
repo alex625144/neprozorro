@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.Getter;
 import lombok.ToString;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +32,9 @@ public class ResultReport {
 
     @Column(name = "dk")
     private String dk;
+
+    @Column(name = "date")
+    private LocalDate date;
 
     @Column(name = "prozorro_url")
     private String prozorroURL;
