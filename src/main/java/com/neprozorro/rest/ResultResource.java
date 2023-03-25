@@ -22,14 +22,13 @@ public class ResultResource {
 
     @GetMapping("/laptops/dateRange?from={startDate},to={endDate}")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<ResultReport> getResultTable(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    public List<ResultReport> getResultTable(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         List<ResultReport> resultReports = new ArrayList<>();
         try {
-            resultReports =resultService.getResult(startDate, endDate);
+            resultReports = resultService.getResult(startDate, endDate);
         } catch (RuntimeException ex) {
             ex.printStackTrace();
         }
-        return  resultReports;
+        return resultReports;
     }
 }
