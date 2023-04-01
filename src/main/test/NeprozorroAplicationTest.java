@@ -1,4 +1,4 @@
-package test.java.com.neprozorro;
+package test;
 
 public class NeprozorroAplicationTest {
 }

@@ -1,5 +1,6 @@
 package com.neprozorro.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +34,10 @@ public class ResultReportItem {
     private String model;
 
     @Column(name = "amount")
-    private BigDecimal amount;
+    private int amount;
+
+    @Column(name = "item_price")
+    private BigDecimal itemPrice;
 
     @Column(name = "market_price")
     private BigDecimal marketPrice;
@@ -41,6 +45,7 @@ public class ResultReportItem {
     @Column(name = "price_violation")
     private BigDecimal priceViolation;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ResultReport.id", referencedColumnName = "id")
     private ResultReport resultReport;

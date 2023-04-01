@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface ResultReportRepository extends JpaRepository<ResultReport, UUID> {
 
-    List<ResultReport> findResultReportsByDateAndDate(LocalDate startDate, LocalDate endDate);
+    List<ResultReport> findResultReportsByDateBetween(LocalDate startDate, LocalDate endDate);
 }

@@ -20,6 +20,6 @@ public class ResultService {
 
     @Transactional
     public List<ResultReport> getResult(LocalDate startDate, LocalDate endDate) {
-        return resultReportRepository.findResultReportsByDateAndDate(startDate, endDate);
+        return resultReportRepository.findResultReportsByDateBetween(startDate, endDate);
     }
 }
