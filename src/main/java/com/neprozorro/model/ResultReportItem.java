@@ -27,7 +27,7 @@ public class ResultReportItem {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @Column(name = "Id")
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "model")
