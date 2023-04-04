@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RestController()
+@RestController
 @RequiredArgsConstructor
-public class MockResource { //Todo for remove
+public class MockResource {
 
     private final MockService saveService;
 

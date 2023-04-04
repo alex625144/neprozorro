@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ResultResource {
