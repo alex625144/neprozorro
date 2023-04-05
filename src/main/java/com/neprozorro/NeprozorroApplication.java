@@ -1,4 +1,4 @@
-package main.java.com.neprozorro;
+package com.neprozorro;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NeprozorroApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NeprozorroApplication.class, args);
+     SpringApplication.run(NeprozorroApplication.class, args);
     }
 }
+
