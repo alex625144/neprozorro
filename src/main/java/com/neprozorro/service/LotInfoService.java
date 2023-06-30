@@ -41,9 +41,8 @@ public class LotInfoService {
         return lotInfoRepository.findAll();
     }
 
-    public Page<LotInfoResponseDTO> findByCriteria(LotInfoCriteriaRequestDto criteriaRequestDto) {
+    public Page<LotInfoResponseDTO> findByCriteria(LotInfoCriteriaRequestDto criteriaRequestDto, Pageable pageable) {
         Specification<LotInfo> specification = createSpecification(criteriaRequestDto);
-        Pageable pageable = criteriaRequestDto.getPageRequestDTO().getPageable();
 
         return lotInfoRepository.findAll(specification, pageable)
                 .map(lotInfoMapper::toDto);
@@ -96,11 +95,13 @@ public class LotInfoService {
 
         if (split.length == 1) {
             LotStatus status = LotStatus.valueOf(value);
+
             return criteriaBuilder.equal(root.get(column), status);
         } else {
             List<LotStatus> statuses = Arrays.stream(split)
-                    .map(status -> LotStatus.valueOf(status))
+                    .map(LotStatus::valueOf)
                     .toList();
+
             return root.get(column).in(statuses);
         }
     }
@@ -117,6 +118,6 @@ public class LotInfoService {
         }
 
         return criteriaBuilder.between(root.get(column), BigDecimal.valueOf(Double.valueOf(parsedValue[0])),
-                                                                                    BigDecimal.valueOf(Double.valueOf(parsedValue[1])));
+                                                                  BigDecimal.valueOf(Double.valueOf(parsedValue[1])));
     }
 }

@@ -17,5 +17,4 @@ public class LotInfoCriteriaRequestDto {
     private String participants;
     private String lotURL;
     private String pdfURL;
-    private PageRequestDTO pageRequestDTO;
 }
