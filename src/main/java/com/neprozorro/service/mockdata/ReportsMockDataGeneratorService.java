@@ -40,7 +40,7 @@ public class ReportsMockDataGeneratorService {
     );
 
     @Transactional
-    public void generateResultReportsMockData(){ //TODO for remove untested
+    public void generateResultReportsMockData(){
         for (int i = 0; i<MOCK_DATA_NUMBER; i++) {
             ResultReport resultReport = new ResultReport();
             ThreadLocalRandom randomNum = ThreadLocalRandom.current();
