@@ -25,12 +25,10 @@ public class Participant {
     @Column(name = "id")
     private UUID id;
 
+    /** ЄДРПУО **/
     @Column(name = "sgrpul")
-    private String sgrpul;//ЄДРПУО
+    private String sgrpul;
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "address")
-    private String address;
 }

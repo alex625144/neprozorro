@@ -20,6 +20,7 @@ public class ParticipantMockDataSource {
     String source = "src/main/resources/mock/seller-buyer.txt";
     private final List<Participant> participants;
     private int counter = 0;
+    private int sgrpulCounter = 0;
 
     private final ParticipantRepository participantRepository;
 
@@ -48,6 +49,7 @@ public class ParticipantMockDataSource {
         dataList = new ArrayList<>(uniqueValue.stream()
                         .map(name -> {
                             var participant = new Participant();
+                            participant.setSgrpul(String.valueOf(++sgrpulCounter));
                             participant.setName(name);
                             return participant;
                         })

@@ -44,7 +44,7 @@ public class LotItemInfo {
     private BigDecimal totalItemPrice;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "LotInfo.id", referencedColumnName = "id")
     private LotInfo lotInfo;
 }
