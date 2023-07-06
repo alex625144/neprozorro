@@ -40,8 +40,8 @@ public class ReportsMockDataGeneratorService {
     );
 
     @Transactional
-    public void generateResultReportsMockData(){
-        for (int i = 0; i<MOCK_DATA_NUMBER; i++) {
+    public void generateResultReportsMockData() {
+        for (int i = 0; i < MOCK_DATA_NUMBER; i++) {
             ResultReport resultReport = new ResultReport();
             ThreadLocalRandom randomNum = ThreadLocalRandom.current();
             BigDecimal lotPrice = BigDecimal.ZERO;
@@ -56,7 +56,7 @@ public class ReportsMockDataGeneratorService {
                 resultReportItem.setItemPrice(itemPrice);
                 BigDecimal marketPrice = itemPrice.subtract(BigDecimal.valueOf(itemPrice.doubleValue() * randomNum.nextDouble(-0.2, 0.2)));//????
                 resultReportItem.setMarketPrice(marketPrice);
-                resultReportItem.setPriceViolation(BigDecimal.valueOf((marketPrice.doubleValue()-itemPrice.doubleValue()) * resultReportItem.getAmount()));
+                resultReportItem.setPriceViolation(BigDecimal.valueOf((marketPrice.doubleValue() - itemPrice.doubleValue()) * resultReportItem.getAmount()));
                 resultReportItem.setResultReport(resultReport);
 
                 var totalItemPrice = itemPrice.multiply(BigDecimal.valueOf(resultReportItem.getAmount()));
@@ -83,7 +83,7 @@ public class ReportsMockDataGeneratorService {
     }
 
     private String getModel(int index) {
-        if(index >= PREPARE_MOCK_MODEL_LIST.size()) {
+        if (index >= PREPARE_MOCK_MODEL_LIST.size()) {
             index %= PREPARE_MOCK_MODEL_LIST.size();
         }
 

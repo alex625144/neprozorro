@@ -56,8 +56,8 @@ public class LotInfoService {
                 predicates.add(criteriaBuilder.like(root.get(BUYER).get(NAME), "%" + criteriaRequestDto.getBuyer() + "%"));
             if (criteriaRequestDto.getSeller() != null)
                 predicates.add(criteriaBuilder.like(root.get(SELLER).get(NAME), "%" + criteriaRequestDto.getSeller() + "%"));
-            if (criteriaRequestDto.getLotTotalPrice() != null)
-                predicates.add(inOrEqualForLotStatus(root, criteriaBuilder, LOT_STATUS, criteriaRequestDto.getLotStatus()));
+            if (criteriaRequestDto.getLotStatus() != null)
+                predicates.add(inOrEqualLotStatus(root, criteriaBuilder, LOT_STATUS, criteriaRequestDto.getLotStatus()));
             if (criteriaRequestDto.getDk() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, DK, criteriaRequestDto.getDk()));
             if (criteriaRequestDto.getLotTotalPrice() != null)
@@ -90,7 +90,7 @@ public class LotInfoService {
         return result;
     }
 
-    private Predicate inOrEqualForLotStatus(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
+    private Predicate inOrEqualLotStatus(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
         String[] split = value.split(",");
 
         if (split.length == 1) {
@@ -118,6 +118,6 @@ public class LotInfoService {
         }
 
         return criteriaBuilder.between(root.get(column), BigDecimal.valueOf(Double.valueOf(parsedValue[0])),
-                                                                  BigDecimal.valueOf(Double.valueOf(parsedValue[1])));
+                BigDecimal.valueOf(Double.valueOf(parsedValue[1])));
     }
 }

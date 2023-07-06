@@ -25,9 +25,8 @@ public class Participant {
     @Column(name = "id")
     private UUID id;
 
-    /** ЄДРПУО **/
-    @Column(name = "sgrpul")
-    private String sgrpul;
+    @Column(name = "edrpou")
+    private String edrpou;
 
     @Column(name = "name")
     private String name;

@@ -40,8 +40,8 @@ public class LotInfoMockDataGeneratorService {
 
     public void generateLotInfoMockData() {
         List<LotInfo> lotInfoList = new ArrayList<>();
-        
-        for(int i = 0; i < LOT_INFO_MOCK_QUANTITY; i++) {
+
+        for (int i = 0; i < LOT_INFO_MOCK_QUANTITY; i++) {
             LotInfo lotInfo = new LotInfo();
 
             lotInfo.setBuyer(participantMockDataSource.getNextParticipant());
@@ -49,8 +49,8 @@ public class LotInfoMockDataGeneratorService {
             lotInfo.setLotStatus(LotStatus.values()[random.nextInt(0, LotStatus.values().length)]);
             lotInfo.setDk(DK);
             lotInfo.setParticipants(getMockParticipants());
-            lotInfo.setLotURL(LOT_URL+i);
-            lotInfo.setPdfURL(PDF_URL+i);
+            lotInfo.setLotURL(LOT_URL + i);
+            lotInfo.setPdfURL(PDF_URL + i);
             lotInfo.setLotItems(getMockLotItemInfos(lotInfo));
             lotInfo.setLotTotalPrice(countTotalPrice(lotInfo.getLotItems()));
 
@@ -102,7 +102,7 @@ public class LotInfoMockDataGeneratorService {
     }
 
     private String getModel(int index) {
-        if(index >= PREPARE_MOCK_MODEL_LIST.size()) {
+        if (index >= PREPARE_MOCK_MODEL_LIST.size()) {
             index %= PREPARE_MOCK_MODEL_LIST.size();
         }
 

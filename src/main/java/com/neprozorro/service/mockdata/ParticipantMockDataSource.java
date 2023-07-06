@@ -20,7 +20,7 @@ public class ParticipantMockDataSource {
     String source = "src/main/resources/mock/seller-buyer.txt";
     private final List<Participant> participants;
     private int counter = 0;
-    private int sgrpulCounter = 0;
+    private int edrpouCounter = 0;
 
     private final ParticipantRepository participantRepository;
 
@@ -33,11 +33,9 @@ public class ParticipantMockDataSource {
         List<Participant> dataList = new ArrayList<>();
         Set<String> uniqueValue = new HashSet<>();
 
-        try (BufferedReader reader =  new BufferedReader(new FileReader(source))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
             String line;
-            while((line =reader.readLine())!=null)
-
-            {
+            while ((line = reader.readLine()) != null) {
                 uniqueValue.add(line);
             }
         } catch (FileNotFoundException e) {
@@ -47,13 +45,13 @@ public class ParticipantMockDataSource {
         }
 
         dataList = new ArrayList<>(uniqueValue.stream()
-                        .map(name -> {
-                            var participant = new Participant();
-                            participant.setSgrpul(String.valueOf(++sgrpulCounter));
-                            participant.setName(name);
-                            return participant;
-                        })
-                        .toList());
+                .map(name -> {
+                    var participant = new Participant();
+                    participant.setEdrpou(String.valueOf(++edrpouCounter));
+                    participant.setName(name);
+                    return participant;
+                })
+                .toList());
         Collections.shuffle(dataList);
 
         return participantRepository.saveAll(dataList);
