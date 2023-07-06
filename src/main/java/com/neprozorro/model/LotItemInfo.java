@@ -19,12 +19,12 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "result_report_item")
-public class ResultReportItem {
+@Table(name = "lot_item_info")
+public class LotItemInfo {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -34,20 +34,17 @@ public class ResultReportItem {
     @Column(name = "model")
     private String model;
 
+    @Column(name = "price")
+    private BigDecimal price;
+
     @Column(name = "amount")
     private int amount;
 
-    @Column(name = "item_price")
-    private BigDecimal itemPrice;
-
-    @Column(name = "market_price")
-    private BigDecimal marketPrice;
-
-    @Column(name = "price_violation")
-    private BigDecimal priceViolation;
+    @Column(name = "total_item_price")
+    private BigDecimal totalItemPrice;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "ResultReport.id", referencedColumnName = "id")
-    private ResultReport resultReport;
+    @JoinColumn(name = "LotInfo.id", referencedColumnName = "id")
+    private LotInfo lotInfo;
 }
