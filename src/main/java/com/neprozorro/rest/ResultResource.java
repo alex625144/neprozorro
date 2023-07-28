@@ -1,6 +1,7 @@
 package com.neprozorro.rest;
 
 import com.neprozorro.service.ResultService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
+@Hidden
 public class ResultResource {
 
     private final ResultService resultService;

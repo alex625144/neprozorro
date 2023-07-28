@@ -5,6 +5,7 @@ import com.neprozorro.rest.dto.LotInfoCriteriaRequestDto;
 import com.neprozorro.rest.dto.LotInfoMapper;
 import com.neprozorro.rest.dto.LotInfoResponseDTO;
 import com.neprozorro.service.LotInfoService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ public class LotInfoResource {
 
     @GetMapping("/filter")
     @ResponseStatus(HttpStatus.OK)
+    @Hidden
     public ResponseEntity<Page<LotInfoResponseDTO>> findByCriteria(LotInfoCriteriaRequestDto lotInfoCriteriaRequestDto, Pageable pageable) {
         return ResponseEntity.ok(lotInfoService.findByCriteria(lotInfoCriteriaRequestDto, pageable));
     }
