@@ -90,20 +90,12 @@ public class LotInfoService {
         return result;
     }
 
-    private Predicate inOrEqualLotStatus(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
-        String[] split = value.split(",");
-
-        if (split.length == 1) {
-            LotStatus status = LotStatus.valueOf(value);
-
-            return criteriaBuilder.equal(root.get(column), status);
-        } else {
-            List<LotStatus> statuses = Arrays.stream(split)
-                    .map(LotStatus::valueOf)
-                    .toList();
-
-            return root.get(column).in(statuses);
+    private Predicate inOrEqualLotStatus(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, List<LotStatus> lotStatuses) {
+        if (lotStatuses.size() == 1) {
+            return criteriaBuilder.equal(root.get(column), lotStatuses.get(0));
         }
+
+        return root.get(column).in(lotStatuses);
     }
 
     private Predicate betweenOrEqual(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
