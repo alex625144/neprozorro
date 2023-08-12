@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mockdata/lot-info-generator")
+@RequestMapping("/api/v1/mockdata/lot-info-generator")
 public class LotInfoMockDataGenerator {
 
     private final LotInfoMockDataGeneratorService lotInfoMockDataGeneratorService;

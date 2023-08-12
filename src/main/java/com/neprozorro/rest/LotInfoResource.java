@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lot-info")
+@RequestMapping("/api/v1/lot-info")
 @RequiredArgsConstructor
 public class LotInfoResource {
 
