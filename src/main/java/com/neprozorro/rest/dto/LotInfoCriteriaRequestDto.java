@@ -1,8 +1,11 @@
 package com.neprozorro.rest.dto;
 
+import com.neprozorro.model.LotStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,7 +14,7 @@ public class LotInfoCriteriaRequestDto {
 
     private String buyer;
     private String seller;
-    private String lotStatus;
+    private List<LotStatus> lotStatus;
     private String dk;
     private String lotTotalPrice;
     private String participants;
