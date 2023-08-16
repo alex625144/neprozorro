@@ -1,12 +1,14 @@
 package com.neprozorro.rest.dto;
 
 import com.neprozorro.model.LotStatus;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -28,15 +30,15 @@ public class LotInfoCriteriaRequestDto {
     @Schema(example = "009023")
     private String dk;
 
-    @Schema(example = "10000,20000")
+    @Schema(example = "10000,2000000")
     private String lotTotalPrice;
 
-    @Schema(example = "")
+    @Schema(example = "INSERT_PARTICIPANTS_OR_DELETE_FIELD")
     private String participants;
 
-    @Schema(example = "")
+    @Schema(example = "HTTP://INSERT_URL_OR_DELETE_FIELD")
     private String lotURL;
 
-    @Schema(example = "")
+    @Schema(example = "HTTP://INSERT_URL_OR_DELETE_FIELD")
     private String pdfURL;
 }

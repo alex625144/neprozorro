@@ -10,16 +10,10 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 contact = @Contact(
                         name = "Neprozorro",
                         email = "${info.contacts.email}"
-                      //  url = "https://neprozorro/com"
                 ),
                 description = "OpenAPI documentation for NEPROZORRO",
                 title = "OpenAPI specification - NEPROZORRO",
                 version = "${info.version}"
-//                license = @License(
-//                        name = "License name",
-//                        url = "https://.../com"
-//                ),
-               // termsOfService = "Term of service = Условия использования"
         ),
         servers = {
                 @Server(
@@ -28,5 +22,6 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 )
         }
 )
+
 public class OpenAPIConfig {
 }

@@ -30,7 +30,7 @@ public class LotInfoResource {
 
     @Operation(
             summary = "information of lot with parameters",
-            description = "push button (Try and out), you can get information about lot for special parameters "
+            description = "push button (Try it out), you can get information about lot for special parameters "
     )
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/filter")
@@ -39,14 +39,19 @@ public class LotInfoResource {
                     name = "lot criteria",
                     description = """
                                     The criteria for filtering lot information.\n                                    
-                                      Delete or use any field to change criteria after click (Try and out)\n
+                                      Delete or use any field to change criteria after click (Try it out)\n
                                       Criteria of "lotStatus" can be more than 1, list them with commas.                                      
                                       Examples are in chapter Schemas -> criteria of lot information -> lotstatus -> Enum -> Array\n
                                       Set range "lotTotalPrice" with comma.                               
                                     """
-
             ) LotInfoCriteriaRequestDto lotInfoCriteriaRequestDto,
-            @Parameter(
+            @Parameter(example = "{\n" +
+                    "  \"page\": 0,\n" +
+                    "  \"size\": 10,\n" +
+                    "  \"sort\": [\n" +
+                    "  \"lotTotalPrice,desc\"\n" +
+                    "  ]\n" +
+                    "}",
                     name = "page info",
                     description = "Pagination information. Use any field to change criteria"
 
