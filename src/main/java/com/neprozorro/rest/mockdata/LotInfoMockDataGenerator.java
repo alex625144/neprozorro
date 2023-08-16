@@ -1,5 +1,6 @@
 package com.neprozorro.rest.mockdata;
 
+import com.neprozorro.model.LotInfo;
 import com.neprozorro.service.mockdata.LotInfoMockDataGeneratorService;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;

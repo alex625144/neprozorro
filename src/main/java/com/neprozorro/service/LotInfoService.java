@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -94,7 +95,6 @@ public class LotInfoService {
         if (lotStatuses.size() == 1) {
             return criteriaBuilder.equal(root.get(column), lotStatuses.get(0));
         }
-
         return root.get(column).in(lotStatuses);
     }
 
