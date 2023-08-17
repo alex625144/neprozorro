@@ -9,9 +9,12 @@ spring:
     ansi:
       enabled: ALWAYS
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=neprozorro
-    username: postgres
-    password: 123
+    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+#    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=neprozorro
+#    username: postgres
+#    password: 123
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -26,9 +29,9 @@ spring:
 
 info:
   contacts:
-    email: lyn81184@gmail.com
+    email: ${CONTACT_EMAIL}
   version: 1.0
-  host: ${SERVER_HOST}
+  host: ${SERVER_HOST:'http://localhost:8081/'}
 
 
 
