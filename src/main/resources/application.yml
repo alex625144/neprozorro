@@ -1,6 +1,5 @@
 server:
   port: 8081
-
 logging:
   level:
     com.neprozorro: INFO
@@ -24,3 +23,12 @@ spring:
         format_sql: true
         order_by:
           default_null_ordering: last
+
+info:
+  contacts:
+    email: lyn81184@gmail.com
+  version: 1.0
+  host: ${SERVER_HOST}
+
+
+

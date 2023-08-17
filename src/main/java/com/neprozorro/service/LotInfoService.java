@@ -3,9 +3,9 @@ package com.neprozorro.service;
 import com.neprozorro.model.LotInfo;
 import com.neprozorro.model.LotStatus;
 import com.neprozorro.repository.LotInfoRepository;
-import com.neprozorro.rest.dto.LotInfoResponseDTO;
-import com.neprozorro.rest.dto.LotInfoMapper;
 import com.neprozorro.rest.dto.LotInfoCriteriaRequestDto;
+import com.neprozorro.rest.dto.LotInfoMapper;
+import com.neprozorro.rest.dto.LotInfoResponseDTO;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -94,7 +94,6 @@ public class LotInfoService {
         if (lotStatuses.size() == 1) {
             return criteriaBuilder.equal(root.get(column), lotStatuses.get(0));
         }
-
         return root.get(column).in(lotStatuses);
     }
 
