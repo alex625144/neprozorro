@@ -33,7 +33,7 @@ public class LotInfoCriteriaRequestDto {
     @Schema(example = "10000,2000000")
     private String lotTotalPrice;
 
-    @Schema(example = "INSERT_PARTICIPANTS_OR_DELETE_FIELD")
+    @Schema(example = "ТОВ \"ІндустріальніСистеми\", ФОП Іванова Людмила")
     private String participants;
 
     @Schema(example = "HTTP://INSERT_URL_OR_DELETE_FIELD")
