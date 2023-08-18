@@ -77,10 +77,6 @@ public class LotInfoService {
         String[] parsedValue = value.split(",");
         Predicate result;
 
-        if (parsedValue.length == 1) {
-            return criteriaBuilder.equal(root.get(column), value);
-        }
-
         if (column.equals(PARTICIPANTS)) {
             result = root.get(column).get(NAME).in(Arrays.asList(parsedValue));
         } else {

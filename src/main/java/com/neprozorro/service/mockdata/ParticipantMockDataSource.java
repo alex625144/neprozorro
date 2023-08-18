@@ -35,7 +35,7 @@ public class ParticipantMockDataSource {
         List<Participant> dataList = new ArrayList<>();
         Set<String> uniqueValue = new HashSet<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8)))  {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 uniqueValue.add(line);
