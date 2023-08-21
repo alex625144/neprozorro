@@ -1,5 +1,6 @@
 package com.neprozorro.service;
 
+import com.neprozorro.exceptions.InvalidInputFormatException;
 import com.neprozorro.model.LotInfo;
 import com.neprozorro.model.LotStatus;
 import com.neprozorro.repository.LotInfoRepository;
@@ -36,6 +37,7 @@ public class LotInfoService {
     private static final String LOT_URL = "lotURL";
     private static final String PDF_URL = "pdfURL";
     private static final String NAME = "name";
+    private static final int VALID_SIZE = 2;
 
     public List<LotInfo> findAll() {
         return lotInfoRepository.findAll();
@@ -61,7 +63,7 @@ public class LotInfoService {
             if (criteriaRequestDto.getDk() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, DK, criteriaRequestDto.getDk()));
             if (criteriaRequestDto.getLotTotalPrice() != null)
-                predicates.add(rangeTotalPrice(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
+                predicates.add(greaterThenOrBetween(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
             if (criteriaRequestDto.getParticipants() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, PARTICIPANTS, criteriaRequestDto.getParticipants()));
             if (criteriaRequestDto.getLotURL() != null)
@@ -93,20 +95,19 @@ public class LotInfoService {
         return root.get(column).in(lotStatuses);
     }
 
-    private Predicate rangeTotalPrice(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
+    private Predicate greaterThenOrBetween(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
         String[] parsedValue = value.split(",");
 
         BigDecimal minValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[0]));
         BigDecimal maxValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[1]));
 
-        if (parsedValue.length != 2 ) throw new RuntimeException("Invalid input format");
+        if (parsedValue.length != VALID_SIZE ) throw new InvalidInputFormatException();
 
         if (maxValue.compareTo(BigDecimal.ZERO) == 0 || maxValue == null) {
             return criteriaBuilder.greaterThan(root.get(column), minValue);
         }
 
-        int comparing = minValue.compareTo(maxValue);
-        if (comparing > 0) throw new RuntimeException("k;ugilugiugilu");
+        if (minValue.compareTo(maxValue) > 0) throw new InvalidInputFormatException(minValue, maxValue);
 
         return criteriaBuilder.between(root.get(column), minValue, maxValue);
     }
