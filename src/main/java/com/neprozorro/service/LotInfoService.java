@@ -61,7 +61,7 @@ public class LotInfoService {
             if (criteriaRequestDto.getDk() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, DK, criteriaRequestDto.getDk()));
             if (criteriaRequestDto.getLotTotalPrice() != null)
-                predicates.add(rangeTotalPrice(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
+                predicates.add(greaterThenOrBetween(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
             if (criteriaRequestDto.getParticipants() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, PARTICIPANTS, criteriaRequestDto.getParticipants()));
             if (criteriaRequestDto.getLotURL() != null)
@@ -93,7 +93,7 @@ public class LotInfoService {
         return root.get(column).in(lotStatuses);
     }
 
-    private Predicate rangeTotalPrice(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
+    private Predicate greaterThenOrBetween(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
         String[] parsedValue = value.split(",");
 
         if (parsedValue.length != 2) {
