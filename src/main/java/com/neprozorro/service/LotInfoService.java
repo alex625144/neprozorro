@@ -61,7 +61,7 @@ public class LotInfoService {
             if (criteriaRequestDto.getDk() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, DK, criteriaRequestDto.getDk()));
             if (criteriaRequestDto.getLotTotalPrice() != null)
-                predicates.add(betweenOrEqual(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
+                predicates.add(rangeTotalPrice(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
             if (criteriaRequestDto.getParticipants() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, PARTICIPANTS, criteriaRequestDto.getParticipants()));
             if (criteriaRequestDto.getLotURL() != null)
@@ -93,18 +93,31 @@ public class LotInfoService {
         return root.get(column).in(lotStatuses);
     }
 
-    private Predicate betweenOrEqual(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
+    private Predicate rangeTotalPrice(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
         String[] parsedValue = value.split(",");
 
-        if (parsedValue.length == 1) {
-            return criteriaBuilder.equal(root.get(column), BigDecimal.valueOf(Double.valueOf(value)));
-        }
-
         if (parsedValue.length != 2) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException("Invalid input format");
         }
 
-        return criteriaBuilder.between(root.get(column), BigDecimal.valueOf(Double.valueOf(parsedValue[0])),
-                BigDecimal.valueOf(Double.valueOf(parsedValue[1])));
+        BigDecimal minValue;
+        BigDecimal maxValue;
+
+        try {
+            minValue = new BigDecimal(parsedValue[0]);
+            maxValue = new BigDecimal(parsedValue[1]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid numeric input");
+        }
+
+        if (maxValue.compareTo(BigDecimal.ZERO) == 0) {
+            return criteriaBuilder.greaterThan(root.get(column), minValue);
+        }
+
+        if (minValue.compareTo(maxValue) > 0) {
+            throw new IllegalArgumentException("Second value less then first");
+        }
+
+        return criteriaBuilder.between(root.get(column), minValue, maxValue);
     }
 }
