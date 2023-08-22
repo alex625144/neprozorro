@@ -36,6 +36,7 @@ public class LotInfoService {
     private static final String LOT_URL = "lotURL";
     private static final String PDF_URL = "pdfURL";
     private static final String NAME = "name";
+    private static final int VALID_SIZE = 2;
 
     public List<LotInfo> findAll() {
         return lotInfoRepository.findAll();
@@ -96,19 +97,18 @@ public class LotInfoService {
     private Predicate greaterThenOrBetween(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
         String[] parsedValue = value.split(",");
 
-        if (parsedValue.length != 2) {
-            throw new IllegalArgumentException("Invalid input format");
+        if (parsedValue.length != VALID_SIZE ) throw new IllegalArgumentException("Invalid input format. You have to paste two values. " +
+                "Paste min and max total price. In format \"{minPrice},{maxPrice}\"");
+
+        BigDecimal minValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[0]));
+        BigDecimal maxValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[1]));
+
+        if (maxValue.compareTo(BigDecimal.ZERO) == 0 || maxValue == null) {
+            return criteriaBuilder.greaterThan(root.get(column), minValue);
         }
 
-        BigDecimal minValue;
-        BigDecimal maxValue;
-
-        try {
-            minValue = new BigDecimal(parsedValue[0]);
-            maxValue = new BigDecimal(parsedValue[1]);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Invalid numeric input");
-        }
+        if (minValue.compareTo(maxValue) > 0) throw new IllegalArgumentException(String.format("Not expected value. Expected format \"{minPrice},{maxPrice}\", " +
+                "where {min Price} (%s) can`t be less than the {maxPrice}(%s). For ignoring {maxPrice}, instead {maxPrice} put 0.", minValue, maxValue));
 
         if (maxValue.compareTo(BigDecimal.ZERO) == 0) {
             return criteriaBuilder.greaterThan(root.get(column), minValue);
