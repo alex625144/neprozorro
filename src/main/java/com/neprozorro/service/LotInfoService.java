@@ -36,6 +36,7 @@ public class LotInfoService {
     private static final String LOT_URL = "lotURL";
     private static final String PDF_URL = "pdfURL";
     private static final String NAME = "name";
+    private static final int VALID_SIZE = 2;
 
     public List<LotInfo> findAll() {
         return lotInfoRepository.findAll();
@@ -61,7 +62,7 @@ public class LotInfoService {
             if (criteriaRequestDto.getDk() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, DK, criteriaRequestDto.getDk()));
             if (criteriaRequestDto.getLotTotalPrice() != null)
-                predicates.add(betweenOrEqual(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
+                predicates.add(greaterThenOrBetween(root, criteriaBuilder, LOT_TOTAL_PRICE, criteriaRequestDto.getLotTotalPrice()));
             if (criteriaRequestDto.getParticipants() != null)
                 predicates.add(inOrEqual(root, criteriaBuilder, PARTICIPANTS, criteriaRequestDto.getParticipants()));
             if (criteriaRequestDto.getLotURL() != null)
@@ -93,18 +94,22 @@ public class LotInfoService {
         return root.get(column).in(lotStatuses);
     }
 
-    private Predicate betweenOrEqual(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
+    private Predicate greaterThenOrBetween(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
         String[] parsedValue = value.split(",");
 
-        if (parsedValue.length == 1) {
-            return criteriaBuilder.equal(root.get(column), BigDecimal.valueOf(Double.valueOf(value)));
+        if (parsedValue.length != VALID_SIZE ) throw new IllegalArgumentException("Invalid input format. You have to paste two values. " +
+                "Paste min and max total price. In format \"{minPrice},{maxPrice}\"");
+
+        BigDecimal minValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[0]));
+        BigDecimal maxValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[1]));
+
+        if (maxValue.compareTo(BigDecimal.ZERO) == 0 || maxValue == null) {
+            return criteriaBuilder.greaterThan(root.get(column), minValue);
         }
 
-        if (parsedValue.length != 2) {
-            throw new RuntimeException();
-        }
+        if (minValue.compareTo(maxValue) > 0) throw new IllegalArgumentException(String.format("Not expected value. Expected format \"{minPrice},{maxPrice}\", " +
+                "where {min Price} (%s) can`t be less than the {maxPrice}(%s). For ignoring {maxPrice}, instead {maxPrice} put 0.", minValue, maxValue));
 
-        return criteriaBuilder.between(root.get(column), BigDecimal.valueOf(Double.valueOf(parsedValue[0])),
-                BigDecimal.valueOf(Double.valueOf(parsedValue[1])));
+        return criteriaBuilder.between(root.get(column), minValue, maxValue);
     }
 }

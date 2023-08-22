@@ -1,14 +1,12 @@
 package com.neprozorro.rest.dto;
 
 import com.neprozorro.model.LotStatus;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Locale;
 
 @Getter
 @Setter
