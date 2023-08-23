@@ -5,7 +5,7 @@ public enum LotStatus {
     CLARIFICATION_PERIOD("Період уточнень"),
     WAITING_FOR_ORDER("Очікування пропозицій"),
     PREQUALIFICATION("Прекваліфікація"),
-    PREQUALIFICATION_APPEAL_PERIOD("Прекваліфікація(період оскаржень"),
+    PREQUALIFICATION_APPEAL_PERIOD("Прекваліфікація(період оскаржень)"),
     FIRST_INTERMEDIATE_STAGE("Перший проміжний етап"),
     SECOND_INTERMEDIATE_STAGE("Другий проміжний етап"),
     AUCTION_PERIOD("Період аукціону"),
@@ -20,5 +20,9 @@ public enum LotStatus {
 
     LotStatus(String description) {
         this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
