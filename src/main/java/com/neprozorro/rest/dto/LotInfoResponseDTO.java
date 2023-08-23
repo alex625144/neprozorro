@@ -1,7 +1,6 @@
 package com.neprozorro.rest.dto;
 
 import com.neprozorro.model.LotItemInfo;
-import com.neprozorro.model.LotStatus;
 import com.neprozorro.model.Participant;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +16,7 @@ public class LotInfoResponseDTO {
     private UUID id;
     private String buyer;
     private String seller;
-    private LotStatus lotStatus;
+    private String lotStatus;
     private String dk;
     private BigDecimal lotTotalPrice;
     private List<Participant> participantNames;
