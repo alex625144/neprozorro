@@ -28,7 +28,7 @@ public class LotInfoCriteriaRequestDto {
     @Schema(example = "009023")
     private String dk;
 
-    @Schema(example = "10000,2000000")
+    @Schema(example = "10000,200000")
     private String lotTotalPrice;
 
     @Schema(example = "ТОВ \"ІндустріальніСистеми\", ФОП Іванова Людмила")

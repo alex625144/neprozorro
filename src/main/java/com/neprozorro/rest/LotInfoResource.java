@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,7 +44,7 @@ public class LotInfoResource {
                                       Examples are in chapter Schemas -> criteria of lot information -> lotstatus -> Enum -> Array\n
                                       Set range "lotTotalPrice" with comma.                               
                                     """
-            )@Valid LotInfoCriteriaRequestDto lotInfoCriteriaRequestDto,
+            ) LotInfoCriteriaRequestDto lotInfoCriteriaRequestDto,
             @Parameter(example = "{\n" +
                     "  \"page\": 0,\n" +
                     "  \"size\": 10,\n" +

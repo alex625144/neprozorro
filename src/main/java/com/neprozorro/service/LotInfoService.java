@@ -97,7 +97,7 @@ public class LotInfoService {
     }
 
     private Predicate greaterThenOrBetween(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
-        String regex = "^\\s*(\\d+)\\s*,\\s*(\\d+)\\s*$";
+        String regex = "^\\s*(\\d+(\\.\\d+)?)\\s*,\\s*(\\d+(\\.\\d+)?)\\s*";
         Matcher matcher = Pattern.compile(regex).matcher(value);
 
         BigDecimal firstNumber;
@@ -105,14 +105,12 @@ public class LotInfoService {
 
         if (matcher.matches()) {
             firstNumber = new BigDecimal(matcher.group(1));
-            secondNumber = new BigDecimal(matcher.group(2));
-
-            boolean compare = firstNumber.compareTo(secondNumber) > 0;
-
-            secondNumber = new BigDecimal("0");
-
-            criteriaBuilder.greaterThan(root.get(column), firstNumber);
+            secondNumber = new BigDecimal(matcher.group(3));
         } else throw new IllegalArgumentException("Invalid writing in field: \"total Price\"");
+
+        if (firstNumber.compareTo(secondNumber) > 0) {
+           return criteriaBuilder.greaterThan(root.get(column), firstNumber);
+        }
 
         return criteriaBuilder.between(root.get(column), firstNumber, secondNumber);
     }
