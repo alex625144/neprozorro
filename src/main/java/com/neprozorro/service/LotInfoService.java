@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -95,21 +97,21 @@ public class LotInfoService {
     }
 
     private Predicate greaterThenOrBetween(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
-        String[] parsedValue = value.split(",");
+        String regex = "^\\s*(\\d+(\\.\\d+)?)\\s*,\\s*(\\d+(\\.\\d+)?)\\s*";
+        Matcher matcher = Pattern.compile(regex).matcher(value);
 
-        if (parsedValue.length != VALID_SIZE ) throw new IllegalArgumentException("Invalid input format. You have to paste two values. " +
-                "Paste min and max total price. In format \"{minPrice},{maxPrice}\"");
+        BigDecimal firstNumber;
+        BigDecimal secondNumber;
 
-        BigDecimal minValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[0]));
-        BigDecimal maxValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[1]));
+        if (matcher.matches()) {
+            firstNumber = new BigDecimal(matcher.group(1));
+            secondNumber = new BigDecimal(matcher.group(3));
+        } else throw new IllegalArgumentException("Invalid writing in field: \"total Price\"");
 
-        if (maxValue.compareTo(BigDecimal.ZERO) == 0 || maxValue == null) {
-            return criteriaBuilder.greaterThan(root.get(column), minValue);
+        if (firstNumber.compareTo(secondNumber) > 0) {
+           return criteriaBuilder.greaterThan(root.get(column), firstNumber);
         }
 
-        if (minValue.compareTo(maxValue) > 0) throw new IllegalArgumentException(String.format("Not expected value. Expected format \"{minPrice},{maxPrice}\", " +
-                "where {min Price} (%s) can`t be less than the {maxPrice}(%s). For ignoring {maxPrice}, instead {maxPrice} put 0.", minValue, maxValue));
-
-        return criteriaBuilder.between(root.get(column), minValue, maxValue);
+        return criteriaBuilder.between(root.get(column), firstNumber, secondNumber);
     }
 }
