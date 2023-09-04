@@ -1,8 +1,5 @@
 package com.neprozorro.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neprozorro.model.LotItemInfo;
 import com.neprozorro.model.LotStatus;
 import com.neprozorro.model.Participant;
