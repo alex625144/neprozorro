@@ -21,7 +21,6 @@ public class TotalPriceValidator implements ConstraintValidator<ValidTotalPrice,
         }
 
         Matcher matcher = RANGE_PATTERN.matcher(value);
-
         if (matcher.matches()) {
             BigDecimal firstNumber = new BigDecimal(matcher.group(1));
             BigDecimal secondNumber = new BigDecimal(matcher.group(3));
