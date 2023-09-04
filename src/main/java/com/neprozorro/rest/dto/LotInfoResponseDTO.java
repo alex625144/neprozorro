@@ -1,5 +1,6 @@
 package com.neprozorro.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neprozorro.model.LotItemInfo;
 import com.neprozorro.model.LotStatus;
 import com.neprozorro.model.Participant;
@@ -20,8 +21,10 @@ public class LotInfoResponseDTO {
     private LotStatus lotStatus;
     private String dk;
     private BigDecimal lotTotalPrice;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Participant> participantNames;
     private String lotURL;
     private String pdfURL;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<LotItemInfo> lotItems;
 }
