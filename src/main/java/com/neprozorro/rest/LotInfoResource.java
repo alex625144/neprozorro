@@ -45,7 +45,7 @@ public class LotInfoResource {
                                       Examples are in chapter Schemas -> criteria of lot information -> lotstatus -> Enum -> Array\n
                                       Set range "lotTotalPrice" with comma.                               
                                     """
-            )@Validated LotInfoCriteriaRequestDto lotInfoCriteriaRequestDto,
+            ) @Validated LotInfoCriteriaRequestDto lotInfoCriteriaRequestDto,
             @Parameter(example = "{\n" +
                     "  \"page\": 0,\n" +
                     "  \"size\": 10,\n" +
