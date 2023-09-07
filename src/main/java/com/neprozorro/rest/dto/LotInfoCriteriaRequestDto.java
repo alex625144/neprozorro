@@ -1,6 +1,7 @@
 package com.neprozorro.rest.dto;
 
 import com.neprozorro.model.LotStatus;
+import com.neprozorro.validation.annotation.ValidTotalPrice;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class LotInfoCriteriaRequestDto {
     @Schema(example = "009023")
     private String dk;
 
+    @ValidTotalPrice
     @Schema(example = "10000,2000000")
     private String lotTotalPrice;
 

@@ -95,21 +95,16 @@ public class LotInfoService {
     }
 
     private Predicate greaterThenOrBetween(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
-        String[] parsedValue = value.split(",");
 
-        if (parsedValue.length != VALID_SIZE ) throw new IllegalArgumentException("Invalid input format. You have to paste two values. " +
-                "Paste min and max total price. In format \"{minPrice},{maxPrice}\"");
+        String[] string = value.split(",");
 
-        BigDecimal minValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[0]));
-        BigDecimal maxValue = BigDecimal.valueOf(Double.parseDouble(parsedValue[1]));
+        BigDecimal firstNumber = new BigDecimal(string[0].trim());
+        BigDecimal secondNumber = new BigDecimal(string[1].trim());
 
-        if (maxValue.compareTo(BigDecimal.ZERO) == 0 || maxValue == null) {
-            return criteriaBuilder.greaterThan(root.get(column), minValue);
+        if (secondNumber.equals(BigDecimal.ZERO)) {
+            return criteriaBuilder.greaterThan(root.get(column), firstNumber);
         }
 
-        if (minValue.compareTo(maxValue) > 0) throw new IllegalArgumentException(String.format("Not expected value. Expected format \"{minPrice},{maxPrice}\", " +
-                "where {min Price} (%s) can`t be less than the {maxPrice}(%s). For ignoring {maxPrice}, instead {maxPrice} put 0.", minValue, maxValue));
-
-        return criteriaBuilder.between(root.get(column), minValue, maxValue);
+        return criteriaBuilder.between(root.get(column), firstNumber, secondNumber);
     }
 }
