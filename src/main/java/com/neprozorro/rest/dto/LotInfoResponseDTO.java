@@ -24,4 +24,18 @@ public class LotInfoResponseDTO {
     private String lotURL;
     private String pdfURL;
     private List<LotItemInfo> lotItems;
+
+    public void setParticipantNames(List<Participant> participantNames) {
+        if (participantNames.isEmpty()){
+            participantNames = null;
+        }
+        this.participantNames = participantNames;
+    }
+
+    public void setLotItems(List<LotItemInfo> lotItems) {
+        if(lotItems.isEmpty()){
+            lotItems = null;
+        }
+        this.lotItems = lotItems;
+    }
 }
