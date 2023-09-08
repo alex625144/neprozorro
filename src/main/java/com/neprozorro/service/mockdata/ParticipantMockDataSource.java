@@ -22,7 +22,7 @@ public class ParticipantMockDataSource {
     String source = "src/main/resources/mock/seller-buyer.txt";
     private final List<Participant> participants;
     private int counter = 0;
-    private int edrpouCounter = 0;
+    private int edrpouCounter = 10_000_000;
 
     private final ParticipantRepository participantRepository;
 

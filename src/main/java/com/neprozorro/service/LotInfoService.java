@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +38,7 @@ public class LotInfoService {
     private static final String LOT_URL = "lotURL";
     private static final String PDF_URL = "pdfURL";
     private static final String NAME = "name";
-    private static final int VALID_SIZE = 2;
+    private static final String EDRPOU = "edrpou";
 
     public List<LotInfo> findAll() {
         return lotInfoRepository.findAll();
@@ -54,9 +56,9 @@ public class LotInfoService {
             List<Predicate> predicates = new ArrayList<>();
 
             if (criteriaRequestDto.getBuyer() != null)
-                predicates.add(criteriaBuilder.like(root.get(BUYER).get(NAME), "%" + criteriaRequestDto.getBuyer() + "%"));
+                predicates.add(likeOrEqual(root, criteriaBuilder, BUYER, criteriaRequestDto.getBuyer()));
             if (criteriaRequestDto.getSeller() != null)
-                predicates.add(criteriaBuilder.like(root.get(SELLER).get(NAME), "%" + criteriaRequestDto.getSeller() + "%"));
+                predicates.add(likeOrEqual(root, criteriaBuilder, SELLER, criteriaRequestDto.getSeller()));
             if (criteriaRequestDto.getLotStatus() != null)
                 predicates.add(inOrEqualLotStatus(root, criteriaBuilder, LOT_STATUS, criteriaRequestDto.getLotStatus()));
             if (criteriaRequestDto.getDk() != null)
@@ -74,17 +76,41 @@ public class LotInfoService {
         };
     }
 
-    private Predicate inOrEqual(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
-        String[] parsedValue = value.split(",");
-        Predicate result;
+    private Predicate likeOrEqual(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
+        Pattern pattern = Pattern.compile("^\\s*\\d{8}\\s*$");
+        Matcher matcher = pattern.matcher(value.trim());
 
-        if (column.equals(PARTICIPANTS)) {
-            result = root.get(column).get(NAME).in(Arrays.asList(parsedValue));
-        } else {
-            result = root.get(column).in(Arrays.asList(parsedValue));
+        if (matcher.matches()) {
+            return criteriaBuilder.equal(root.get(column).get(EDRPOU), value);
         }
 
-        return result;
+        return criteriaBuilder.like(root.get(column).get(NAME), "%" + value + "%");
+    }
+
+    private Predicate inOrEqual(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, String value) {
+        String[] parsedValue = value.split(",");
+        Pattern pattern = Pattern.compile("^\\s*\\d{8}\\s*$");
+
+        List<String> edrpous = new ArrayList<>();
+        List<String> names = new ArrayList<>();
+
+        Arrays.stream(parsedValue).forEach(e -> {
+            Matcher matcher = pattern.matcher(e);
+            if (matcher.matches()) {
+                edrpous.add(e.trim());
+            } else {
+                names.add(e.trim());
+            }
+        });
+
+        if (edrpous.isEmpty()) {
+            return root.get(column).get(NAME).in(names);
+        }
+        if (names.isEmpty()) {
+            return root.get(column).get(EDRPOU).in(edrpous);
+        }
+
+        return criteriaBuilder.or(root.get(column).get(EDRPOU).in(edrpous), root.get(column).get(NAME).in(names));
     }
 
     private Predicate inOrEqualLotStatus(Root<LotInfo> root, CriteriaBuilder criteriaBuilder, String column, List<LotStatus> lotStatuses) {
